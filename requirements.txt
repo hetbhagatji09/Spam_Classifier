@@ -1,0 +1,6 @@
+logger
+numpy
+pandas
+scikit-learn
+flask
+-e .
