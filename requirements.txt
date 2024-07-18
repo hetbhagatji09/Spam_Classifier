@@ -7,4 +7,5 @@ matplotlib
 seaborn
 xgboost
 nltk
--e .
+dill
+#-e .

@@ -2,13 +2,19 @@ from src.exception import customException
 import os,sys
 import pandas as pd
 from src.logger import logging
+import pandas as pd
+from src.utils import paragraph_list_format
 from sklearn.model_selection import train_test_split
+from src.components.model_trainer import Model_Trainer,Model_Trainer_Config
 from dataclasses import dataclass
 @dataclass
 class DataIngestionConfig:
     train_data_path=os.path.join("artifacts","train.csv")
     test_data_path=os.path.join("artifacts","test.csv")
     raw_data_path=os.path.join("artifacts","raw.csv")
+    # train_stemmer_data_path=os.path.join("artifacts","train_stemmer.csv")
+    # test_stemmer_data_path=os.path.join("artifacts","test_stemmer.csv")
+    # raw_stemmer_data_path=os.path.join("artifacts","raw_stemmer.csv")
     
 class DataIngestion:
     def __init__(self):
@@ -30,6 +36,9 @@ class DataIngestion:
             os.makedirs(os.path.dirname(self.ingestion_config.test_data_path),exist_ok=True)
             test_data.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
             
+            # logging.info("Applying stemming on test train and raw data")
+            # train_corpus=paragraph_list_format(train_data)
+            
             logging.info("Ingestion is Completed now")
             return(
                 self.ingestion_config.train_data_path,
@@ -39,7 +48,12 @@ class DataIngestion:
             raise customException(e,sys)
         
 if __name__=="__main__":
-    obj=DataIngestion()
-    obj.initiate_data_config()
+    try:
+        obj=DataIngestion()
+        train_data,test_data=obj.initiate_data_config()
+        model_trainer=Model_Trainer()
+        model_trainer.initiate_model_trainer(train_data,test_data)
+    except Exception as e:
+        raise customException(e,sys)
             
     
