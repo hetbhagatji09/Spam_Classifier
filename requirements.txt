@@ -8,4 +8,5 @@ seaborn
 xgboost
 nltk
 dill
-#-e .
+streamlit
+-e .

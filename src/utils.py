@@ -8,7 +8,6 @@ import warnings
 warnings.filterwarnings("ignore")
 from nltk import word_tokenize
 from nltk.stem import PorterStemmer,WordNetLemmatizer
-nltk.download('stopwords')
 from nltk.corpus import stopwords
 
 from src.exception import customException
@@ -42,3 +41,15 @@ def save_object(file_path,obj):
             dill.dump(obj,file_obj)
     except Exception as e:
         raise customException(e,sys)
+    
+def predict(text):
+    model_path="artifacts\model.pkl"
+    model=load_object(file_path=model_path)
+    prediction=model.predict([text])
+    if prediction[0]==1:
+        return "Ham"
+    else:
+        return "Spam"
+    # return prediction
+    
+    
