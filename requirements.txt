@@ -9,4 +9,5 @@ xgboost
 nltk
 dill
 streamlit
+awsebcli
 -e .
